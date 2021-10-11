@@ -2,11 +2,11 @@
 
 module CinemaAdmin
   module V1
-    class MovieShowings < Grape::API
+    class Showings < Grape::API
       version 'v1', using: :path
       prefix :admin_api
 
-      resource :movie_showings do
+      resource :showings do
         desc '[Admin] Returns a list of all movies showings'
         get do
           status :ok
@@ -15,7 +15,7 @@ module CinemaAdmin
 
       resource :movies do
         route_param :movie_id do
-          resource :movie_showings do
+          resource :showings do
             desc '[Admin] Creates a new showing for the specific movie'
             params do
               requires :projection_date, type: Time, allow_blank: false,

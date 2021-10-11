@@ -2,8 +2,8 @@
 
 class CinemaApi < ApiBase
   mount Cinema::V1::Movies
-  mount Cinema::V1::MovieShowings
-  mount Cinema::V1::MovieRatings
+  mount Cinema::V1::Showings
+  mount Cinema::V1::Ratings
   mount Cinema::V1::Users
 
   add_swagger_documentation info: {

@@ -2,13 +2,13 @@
 
 module Cinema
   module V1
-    class MovieShowings < Grape::API
+    class Showings < Grape::API
       version 'v1', using: :path
       prefix :api
 
       namespace :movies do
         route_param :movie_id do
-          resource :movie_showings do
+          resource :showings do
             desc 'Returns a list of movie showings for the specific movie'
             get do
               status :ok

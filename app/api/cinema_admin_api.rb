@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CinemaAdminApi < ApiBase
-  mount CinemaAdmin::V1::MovieShowings
+  mount CinemaAdmin::V1::Showings
   mount CinemaAdmin::V1::Prices
 
   add_swagger_documentation info: {
