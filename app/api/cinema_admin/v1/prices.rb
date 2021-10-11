@@ -22,7 +22,13 @@ module CinemaAdmin
           requires :child_price, type: Integer, desc: 'Price for children'
         end
         patch do
-          status :ok
+          CinemaAdmin::Prices::Update.new.call(params.symbolize_keys) do |result|
+            result.success { status :ok }
+            result.failure(Dry::Validation::MessageSet) do |e|
+              error!({ message: 'Validation failed', errors: e.to_h }, 422)
+            end
+            result.failure { status :service_unavailable }
+          end
         end
       end
     end
