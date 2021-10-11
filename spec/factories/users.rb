@@ -2,7 +2,11 @@
 
 FactoryBot.define do
   factory :user do
-    username { 'MyString' }
-    role { 'MyString' }
+    username { Faker::Internet.email }
+    role { 'moviegoer' }
+  end
+
+  trait(:admin) do
+    role { 'admin' }
   end
 end

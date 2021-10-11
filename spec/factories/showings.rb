@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :showing do
-    projection_date { '2021-10-11 21:56:43' }
-    movie { nil }
+    projection_date { Faker::Number.number(digits: 1).days.from_now }
+    movie
   end
 end

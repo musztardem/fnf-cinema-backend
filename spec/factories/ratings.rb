@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :rating do
-    rate { 1 }
-    user { nil }
+    rate { Faker::Number.between(from: 1, to: 5) }
+    user
   end
 end
