@@ -9,7 +9,11 @@ module CinemaAdmin
       resources :prices do
         desc 'Returns prices'
         get do
-          status :ok
+          CinemaAdmin::Prices::Get.new.call do |result|
+            result.success { |prices| present prices, with: CinemaAdmin::Entities::Prices }
+            result.failure(:not_found) { status :not_found }
+            result.failure { status :service_unavailable }
+          end
         end
 
         desc 'Updates prices'
