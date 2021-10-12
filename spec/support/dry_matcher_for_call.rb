@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DryMatcherForCall
-  def include_dry_matcher(klass, call:)
+  def stub_with_dry_matcher(klass, call:)
     raise ArgumentError, 'Provided class does not has #call method' unless klass.method_defined? :call
 
     instance_spy(klass, call: call).tap do |spy|

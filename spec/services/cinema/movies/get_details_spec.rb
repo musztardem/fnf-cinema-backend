@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Cinema::Movies::GetDetails do
-  include Dry::Monads[:result, :do]
+  include Dry::Monads[:result]
 
   subject(:service) do
     described_class.new(
@@ -16,7 +16,7 @@ RSpec.describe Cinema::Movies::GetDetails do
   let(:movies_repo_mock) { instance_double 'MoviesRepository', exists?: movie_exists }
   let(:movie_details_repo_mock) { instance_double 'MovieDetailsRepository', load: movie_details }
   let(:rating_service_mock) do
-    include_dry_matcher(Cinema::Movies::CalculateMovieRating, call: calculation_result)
+    stub_with_dry_matcher(Cinema::Movies::CalculateMovieRating, call: calculation_result)
   end
 
   let(:movie_exists) { true }

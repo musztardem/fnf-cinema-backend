@@ -48,3 +48,7 @@ group :development do
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
 end
+
+group :test do
+  gem 'database_cleaner'
+end
