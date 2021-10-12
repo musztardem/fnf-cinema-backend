@@ -10,7 +10,7 @@ module Cinema
 
       resource :movies do
         route_param :movie_id do
-          desc 'Returns information about specific movie'
+          desc 'Returns information about specific movie', entity: Cinema::Entities::MovieDetails
           get do
             Cinema::Movies::GetDetails.new.call(movie_id: params[:movie_id]) do |result|
               result.success { |details| present details, with: Cinema::Entities::MovieDetails }

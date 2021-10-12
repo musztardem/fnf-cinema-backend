@@ -11,7 +11,7 @@ module Cinema
       namespace :movies do
         route_param :movie_id do
           resource :showings do
-            desc 'Returns a list of movie showings for the specific movie'
+            desc 'Returns a list of movie showings for the specific movie', entity: Cinema::Entities::Showing
             get do
               Cinema::Showings::Get.new.call(movie_id: params[:movie_id]) do |result|
                 result.success { |showings| present showings, with: Cinema::Entities::Showing }

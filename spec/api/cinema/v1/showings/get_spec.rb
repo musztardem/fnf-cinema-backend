@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'GET /api/v1/movies/{movieId}/showings' , type: :request do
+RSpec.describe 'GET /api/v1/movies/{movieId}/showings', type: :request do
   include Dry::Monads[:result]
 
   subject(:request) { send request_method, path, params: params, headers: headers }
@@ -13,7 +13,6 @@ RSpec.describe 'GET /api/v1/movies/{movieId}/showings' , type: :request do
   let(:headers) { { 'Authorization' => create(:user).id } }
 
   let(:showing) { create :showing }
-
 
   context 'when user is not authorized' do
     let(:headers) { {} }
@@ -54,7 +53,7 @@ RSpec.describe 'GET /api/v1/movies/{movieId}/showings' , type: :request do
     end
 
     context 'when success' do
-      let(:call_result) { Success(create :showing) }
+      let(:call_result) { Success(create(:showing)) }
 
       it 'returns status 200 (:ok)' do
         expect(response).to have_http_status(:ok)

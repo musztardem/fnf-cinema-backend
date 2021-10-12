@@ -7,7 +7,7 @@ module Cinema
       prefix :api
 
       resource :users do
-        desc 'Creates a normal user'
+        desc 'Creates a normal user', entity: Cinema::Entities::User
         params do
           requires :username, type: String, allow_blank: false
         end

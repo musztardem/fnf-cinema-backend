@@ -9,7 +9,7 @@ module CinemaAdmin
       before { authorize_admin_access! }
 
       resources :prices do
-        desc 'Returns prices'
+        desc 'Returns prices', entity: CinemaAdmin::Entities::Prices
         get do
           CinemaAdmin::Prices::Get.new.call do |result|
             result.success { |prices| present prices, with: CinemaAdmin::Entities::Prices }

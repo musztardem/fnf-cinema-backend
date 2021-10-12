@@ -9,7 +9,7 @@ module CinemaAdmin
       before { authorize_admin_access! }
 
       resource :showings do
-        desc '[Admin] Returns a list of all movies showings'
+        desc '[Admin] Returns a list of all movies showings', entity: CinemaAdmin::Entities::Showing
         get do
           CinemaAdmin::Showings::GetAll.new.call do |result|
             result.success { |showings| present showings, with: CinemaAdmin::Entities::Showing }

@@ -9,11 +9,11 @@ module Cinema
       before { authorize_standard_user_access! }
 
       namespace :movies do
-        route_param :movie_id do
+        route_param :movie_id, desc: 'Movie ID' do
           resource :ratings do
             desc 'Allows user to rate a movie'
             params do
-              requires :rate, type: Integer, desc: 'Rate for the specific movie'
+              requires :rate, type: Integer, desc: 'Rating for the specific movie'
             end
             post do
               Cinema::Ratings::Create.new.call(
