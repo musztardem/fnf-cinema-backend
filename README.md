@@ -17,7 +17,7 @@
 * Create more specs - created only sample specs for most important places in the code
 * Update the format of API requests and responses to have `camelCase` instead of `snake_case`
 * App authorization is basically just an imitation - in order to be authorized user need to send `Authorization` header where the value is his `user_id`...
-* ... unless his an admin - then also his `role` is being checked
+* ... unless he's an admin - then also his `role` is being checked
 
 
 ## Documentation
