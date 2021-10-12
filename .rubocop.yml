@@ -19,3 +19,7 @@ Style/Documentation:
   Exclude:
     - 'app/**/*'
     - 'spec/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

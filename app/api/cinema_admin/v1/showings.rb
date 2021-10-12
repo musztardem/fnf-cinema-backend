@@ -9,7 +9,10 @@ module CinemaAdmin
       resource :showings do
         desc '[Admin] Returns a list of all movies showings'
         get do
-          status :ok
+          CinemaAdmin::Showings::GetAll.new.call do |result|
+            result.success { |showings| present showings, with: CinemaAdmin::Entities::Showing }
+            result.failure { status :service_unavailable }
+          end
         end
       end
 
