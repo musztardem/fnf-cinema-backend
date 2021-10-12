@@ -21,11 +21,22 @@ module CinemaAdmin
           resource :showings do
             desc '[Admin] Creates a new showing for the specific movie'
             params do
-              requires :projection_date, type: Time, allow_blank: false,
-                                         desc: 'Date and time of the specific movie projection'
+              requires :projection_date, type: DateTime, allow_blank: false,
+                                         desc: 'Date and time of the specific movie projection',
+                                         documentation: { example: '2022-03-03 20:15:53' }
             end
             post do
-              status :ok
+              CinemaAdmin::Showings::Create.new.call(
+                movie_id: params[:movie_id],
+                projection_date: params[:projection_date]
+              ) do |result|
+                result.success { status :created }
+                result.failure(:not_found) { error!({ message: 'Movie does not exist' }, :not_found) }
+                result.failure(Dry::Validation::MessageSet) do |e|
+                  error!({ message: 'Validation failed', errors: e.to_h }, 422)
+                end
+                result.failure { status :service_unavailable }
+              end
             end
 
             route_param :showing_id do

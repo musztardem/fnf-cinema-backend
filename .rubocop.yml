@@ -22,4 +22,5 @@ Style/Documentation:
 
 Metrics/BlockLength:
   Exclude:
+    - 'app/api/**/*'
     - 'spec/**/*'
