@@ -23,6 +23,10 @@ class ShowingsRepository
     relation.exists?(id: id, movie_id: movie_id)
   end
 
+  def list_showings_for_movie(movie_id:)
+    relation.where(movie_id: movie_id)
+  end
+
   private
 
   attr_reader :relation
