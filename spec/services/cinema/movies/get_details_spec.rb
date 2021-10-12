@@ -14,14 +14,18 @@ RSpec.describe Cinema::Movies::GetDetails do
   end
 
   let(:movies_repo_mock) { instance_double 'MoviesRepository', exists?: movie_exists }
-  let(:movie_details_repo_mock) do
-    instance_double 'MovieDetailsRepository', load: movie_details_mock
+  let(:movie_details_repo_mock) { instance_double 'MovieDetailsRepository', load: movie_details }
+  let(:rating_service_mock) do
+    include_dry_matcher(Cinema::Movies::CalculateMovieRating, call: calculation_result)
   end
-  let(:rating_service_mock) { instance_double 'CalculateMovieRating', call: calculation_result }
 
   let(:movie_exists) { true }
-  let(:movie_details_mock) { instance_double 'MovieDetailsValue' }
-  let(:calculation_result) { Success(5.0) }
+  let(:movie_details) do
+    MovieDetailsValue.new(imdb_id: '1', title: 'a', plot: 'b', released: 'c',
+                          imdb_rating: '3', runtime: '23')
+  end
+
+  let(:calculation_result) { Success(BigDecimal(5)) }
 
   let(:movie_id) { 'movie-id' }
 
@@ -49,6 +53,22 @@ RSpec.describe Cinema::Movies::GetDetails do
 
       it 'return Failure(nil)' do
         expect(service.call(movie_id: movie_id)).to eq(Failure(nil))
+      end
+    end
+
+    context 'when users rating cannot be calculated' do
+      let(:calculation_result) { Failure(nil) }
+
+      it 'returns result with users rating = 0' do
+        result = service.call(movie_id: movie_id).value!
+        expect(result.users_rating).to eq(0.0)
+      end
+    end
+
+    context 'when users rating is successfully calculated' do
+      it 'returns result with calculated users rating' do
+        result = service.call(movie_id: movie_id).value!
+        expect(result.users_rating).to eq(5.0)
       end
     end
   end
