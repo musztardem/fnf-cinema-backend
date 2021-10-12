@@ -22,8 +22,8 @@ gem 'grape-swagger-representable', '~> 0.2'
 gem 'redis'
 gem 'redis-rails'
 
-gem 'dry-monads'
 gem 'dry-matcher'
+gem 'dry-monads'
 gem 'dry-struct'
 gem 'dry-types'
 gem 'dry-validation'
@@ -38,6 +38,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'rubocop'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'spring'

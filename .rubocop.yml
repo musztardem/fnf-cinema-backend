@@ -1,0 +1,21 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  Exclude:
+    - 'Gemfile.lock'
+    - 'Gemfile'
+    - 'config.ru'
+    - 'Rakefile'
+    - 'db/migrate/*'
+    - 'db/schema.rb'
+    - 'config/**/*'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'script/*'
+    - 'vendor/**/*'
+
+Style/Documentation:
+  Exclude:
+    - 'app/**/*'
+    - 'spec/**/*'
