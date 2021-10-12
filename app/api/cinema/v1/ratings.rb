@@ -14,7 +14,19 @@ module Cinema
               requires :rate, type: Integer, desc: 'Rate for the specific movie'
             end
             post do
-              status :ok
+              Cinema::Ratings::Create.new.call(
+                user_id: 1, # this will be fixed later
+                movie_id: params[:movie_id],
+                rate: params[:rate]
+              ) do |result|
+                result.success { status :created }
+                result.failure(:not_found) { error!({ message: 'Movie not found' }, 404) }
+                result.failure(:already_rated) { error!({ message: 'Movie already rated' }, 422) }
+                result.failure(Dry::Validation::MessageSet) do |e|
+                  error!({ message: 'Validation failed', errors: e.to_h }, 422)
+                end
+                result.failure { status :service_unavailable }
+              end
             end
           end
         end
