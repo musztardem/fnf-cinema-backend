@@ -6,6 +6,8 @@ module Cinema
       version 'v1', using: :path
       prefix :api
 
+      before { authorize_standard_user_access! }
+
       namespace :movies do
         route_param :movie_id do
           resource :ratings do
@@ -15,7 +17,7 @@ module Cinema
             end
             post do
               Cinema::Ratings::Create.new.call(
-                user_id: 1, # this will be fixed later
+                user_id: @current_user_id,
                 movie_id: params[:movie_id],
                 rate: params[:rate]
               ) do |result|

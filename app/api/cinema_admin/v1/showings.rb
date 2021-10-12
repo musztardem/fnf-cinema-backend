@@ -6,6 +6,8 @@ module CinemaAdmin
       version 'v1', using: :path
       prefix :admin_api
 
+      before { authorize_admin_access! }
+
       resource :showings do
         desc '[Admin] Returns a list of all movies showings'
         get do

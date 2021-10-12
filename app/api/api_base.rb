@@ -12,4 +12,16 @@ class ApiBase < Grape::API
     CinemaApi.logger.error JSON.pretty_generate(details)
     error!(details, 500)
   end
+
+  helpers do
+    def authorize_standard_user_access!
+      @current_user_id = headers['Authorization']
+      error!('Unauthorized', 401) unless User.exists?(id: @current_user_id)
+    end
+
+    def authorize_admin_access!
+      @current_user_id = headers['Authorization']
+      error!('Unauthorized', 401) unless User.exists?(id: @current_user_id, role: 'admin')
+    end
+  end
 end

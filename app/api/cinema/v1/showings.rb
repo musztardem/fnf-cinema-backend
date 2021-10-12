@@ -6,6 +6,8 @@ module Cinema
       version 'v1', using: :path
       prefix :api
 
+      before { authorize_standard_user_access! }
+
       namespace :movies do
         route_param :movie_id do
           resource :showings do

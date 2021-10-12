@@ -6,6 +6,8 @@ module CinemaAdmin
       version 'v1', using: :path
       prefix :admin_api
 
+      before { authorize_admin_access! }
+
       resources :prices do
         desc 'Returns prices'
         get do
