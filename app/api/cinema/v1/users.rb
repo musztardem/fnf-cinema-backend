@@ -12,7 +12,8 @@ module Cinema
           requires :username, type: String, allow_blank: false
         end
         post do
-          status :ok
+          user = User.create!(username: params[:username], role: 'moviegoer')
+          present user, with: Cinema::Entities::User
         end
       end
     end
