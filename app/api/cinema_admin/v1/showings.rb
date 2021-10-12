@@ -47,7 +47,19 @@ module CinemaAdmin
                                            desc: 'Date and time of the specific showing'
               end
               patch do
-                status :ok
+                CinemaAdmin::Showings::Update.new.call(
+                  showing_id: params[:showing_id],
+                  movie_id: params[:movie_id],
+                  projection_date: params[:projection_date]
+                ) do |result|
+                  result.success { status :ok }
+                  result.failure(:showing_not_found) { error!({ message: 'Showing does not exist' }, :not_found) }
+                  result.failure(:movie_not_found) { error!({ message: 'Movie does not exist' }, :not_found) }
+                  result.failure(Dry::Validation::MessageSet) do |e|
+                    error!({ message: 'Validation failed', errors: e.to_h }, 422)
+                  end
+                  result.failure { status :service_unavailable }
+                end
               end
             end
           end

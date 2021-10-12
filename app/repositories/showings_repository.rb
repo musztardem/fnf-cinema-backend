@@ -7,8 +7,20 @@ class ShowingsRepository
 
   delegate :all, to: :relation
 
+  def load(id:)
+    relation.find_by(id: id)
+  end
+
   def create(movie_id:, projection_date:)
     relation.create!(movie_id: movie_id, projection_date: projection_date)
+  end
+
+  def update(id:, projection_date:)
+    load(id: id).update!(projection_date: projection_date)
+  end
+
+  def showing_for_movie?(id:, movie_id:)
+    relation.exists?(id: id, movie_id: movie_id)
   end
 
   private
